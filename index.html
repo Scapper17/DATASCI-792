@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang = "en">
+<link rel = 'stylesheet' href = 'index.css'>
+<script type="text/javascript" src="/eel.js"></script>
+<head>
+    <meta charset = "UTF-8">
+    <title>Functional Dependencies</title>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class = "sidebar">
+        <div id = "logo" class = "logo">F D s</div>
+        <div id = "introButton" class = "sideButtonOnClick">
+            <img src="./img/Intro.svg"/>
+            <font id = "intro">Intro</font>
+        </div>
+        <div class = "sideButtonPlaceholder"></div>
+        <div id = "questionnaireButton" class = "sideButton">
+            <img src="./img/Questionnaire.svg"/>
+            <font id = "questionnaire">Questionnaire</font>
+        </div>
+        <div class = "sideButtonPlaceholder"></div>
+        <div id = "resultsButton" class = "sideButton">
+            <img src="./img/Results.svg"/>
+            <font id = "results">Results</font>
+        </div>
+        <div class = "sideButtonPlaceholder"></div>
+        <div id = "supportButton" class = "sideButton">
+            <img src="./img/Support.svg"/>
+            <font id = "support">Support</font>
+        </div>
+    </div>
+
+    <!-- Main Body -->
+    <div class = "mainBody">
+        <!-- Intro Main Body -->
+        <div id = "introMainBody" class = "introMainBody" style = "display: flex">
+            <div class = "title">Functional Dependencies Generate Programme</div>
+            <hr />
+            <div class = "mainBody">
+                <p>This programme is designed for finding functional dependencies (FDs) between different attributes of a specified database.
+                    There are roughly three steps to use. First, the user uploads the db file. Second, experts answer related questions.
+                    Finally, the program will output the functional dependencies between the attributes if any.</p>
+            </div>
+            <div class = "headings">Instructions</div>
+            <div class = "mainBody" style = "top: 320px;">
+                <p>1. Click the "Questionnaire" button to enter the main function page.</p>
+                <p>2. Follow the instructions of that page to finish two steps, which are uploading a database file,
+                    and answer questions with Yes/No.</p>
+                <p>3. After processing, the result will show on the page.</p>
+                <p>* Note: If you want to view the pass results, please click the "Results" button on the left.</p>
+            </div>
+            <div id = "getStartButton" class = "getStartButton">Get Start</div>
+        </div>
+        <!-- Questionnaire Main Body -->
+        <div id = "questionnaireMainBody" class = "questionnaireMainBody" style = "display: none">
+            <div class = "title">Functional Dependencies Generate Programme</div>
+            <hr />
+            <div id = "QMInputData" class = "headings">1. Input Data</div>
+            <div class = "mainBody" style = "top: 320px">
+
+                <!-- Input div of number of attributes -->
+                <div id = "NoAInputStatus" class = "NoA" style = "visibility: visible">
+                    <p>
+                        Please input the number of attributes.
+                        <textarea id = "NoAs"></textarea>
+                    </p>
+                    <p>
+                        Please input the number of existing functional dependencies, if any. If not, please enter 0.
+                        <textarea id = "NoEFDs"></textarea>
+                    </p>
+                    <div id = "NoASubmitButton" class = "NoASubmitButton">Continue</div>
+                </div>
+
+                <!-- Input div of domain values -->
+                <div id = "DVsInputStatus" class = "DVs" style = "visibility: hidden">
+                    <div id = "BackToNoAInputStatusButton" class = "BackToNoAInputStatusButton">Back</div>
+                    <p><a id = "DVsInputStatusSequence"></a>The number of attributes is <a id = "NoAsValue"></a>.</p>
+                    <div id = "DVsArea" class = "DVsArea">
+                        <hr />
+                        <hr style = "left: 65%" />
+                        <div class = "table" style = "font-size: 20px; height: 45px;">
+                            <div class = "columnOne">Value 1</div>
+                            <div class = "columnTwo">Value 2</div>
+                            <div class = "columnThree">Attribute</div>
+                        </div>
+                    </div>
+                    <p style = "bottom: -20px; position: relative">* Note: Feel free to change attribute names above.</p>
+                    <div id = "ExistingFDs" class = "ExistingFDs" style = "display: block">
+                        <p id = "ExistingFDsDescribe" style = "visibility: hidden">2. The number of existing functional dependencies is <a id = "NoEFDsValue"></a>.</p>
+                        <div id = "ExistingFDsArea" class = "ExistingFDsArea">
+                            <hr />
+                            <hr style = "left: 65%" />
+                        </div>
+                        <p id = "ExistingFDsNote" style = "visibility: hidden">* Note: Use the index of the attribute instead of the attribute name. For example, the attribute shows in the first line
+                        of the table has the index 1, so on so forth. And a functional dependency like attribute 1 and attribute 2 decide attribute 3
+                        should be written as 1, 2 on the left side of a line and 3 on the right side of the same line.</p>
+                    </div>
+                    <div id = "DVsSubmitButtonArea" class = "DVsSubmitButtonArea">
+                        <div id = "DVsSubmitButton" class = "DVsSubmitButton">Continue</div>
+                    </div>
+                </div>
+
+                <!-- Questionnaire and Results -->
+                <div id = "QAStatus" class = "QA" style = "visibility: hidden">
+                    <div id = "BackToDVsInputStatusButton" class = "BackToDVsInputStatusButton">Back</div>
+                    <div id = "QAArea" class = "QAArea">
+                        <p class = "subtitle">1. Attribute Array</p>
+                        <div id = "attributeArray" class = "attributeArray"></div>
+                        <div style = "height: 5px; width: 100%;"></div>
+                        <p>* Note: The format of each element in the array showing above is, index: 'attribute name'.
+                            For example, "0: 'Attribute1'" means the index of this attribute is 0 and the name of this attribute is Attribute1.
+                            The following content will use the index of the attributes instead of their names.</p>
+                        <div style = "height: 40px; width: 100%;"></div>
+                        <p id = "Question" class = "subtitle"></p>
+                        <div id = "QuestionAreaType1" class = "QuestionArea">
+                            <table id = "QuestionAreaTable" class = "table"></table>
+                        </div>
+                        <div class = "QuestionTableButtonArea">
+                            <div id = "QuestionTableYes" class = "QuestionTableYes">Yes</div>
+                            <div id = "QuestionTableNo" class = "QuestionTableNo">No</div>
+                        </div>
+                        <div style = "height: 20px; width: 100%;"></div>
+                        <div id = "QAResultArea" class = "QAResultArea"></div>
+                        <div style = "height: 20px; width: 100%;"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Result Main Body -->
+        <div id = "resultsMainBody" class = "resultsMainBody" style = "display: none">
+            <div class = "title">Functional Dependencies</div>
+            <hr />
+            <div id = "resultsMainBodyDefaultHeading" class = "headings">Sorry!</div>
+            <div id = "resultsMainBodyDefaultArea" class = "resultsArea">
+                <p style = "font-size: 18px">* Note: You currently do not input anything, please go to the Intro page.</p>
+            </div>
+            <img id = "resultsMainBodyDefaultImg" src = "./img/stupidSmile.svg"/>
+
+            <div id = "resultsMainBodyHeading" class = "headings" style = "visibility: hidden">
+                <div style = "width: 50%; top: 0px; left: 0px; position: absolute;">Congratulations!</div>
+                <div id = "resultsMainBodyButton" class = "resultsMainBodyButton">Another Round</div>
+            </div>
+            <div id = "resultsMainBodyAreaP" class = "resultsArea" style = "visibility: hidden">
+                <p style = "font-size: 18px">* Note: This is the table of the functional dependeniences, X --> A.</p>
+                <hr />
+                <div class = "table" style = "font-size: 20px; line-height: 20px;">
+                    <div class = "columnOne">X</div>
+                    <div class = "columnTwo">A</div>
+                </div>
+            </div>
+            <div id = "resultsMainBodyAreaN" class = "resultsArea" style = "visibility: hidden">
+                <p style = "font-size: 18px">There is no functional dependencies among the attributes.</p>
+            </div>
+        </div>
+
+
+        <!-- Support Main Body -->
+        <div id = "supportMainBody" class = "supportMainBody" style = "display: none">
+            <div class = "title">Contact us or report a problem</div>
+            <hr />
+            <div class = "headings">Report a problem</div>
+            <div class = "mainBody" style = "top: 180px">
+                <p>Report online if you see a problem of the page or the output result.</p>
+            </div>
+            <textarea id = "reportAreaMainBody" class = "reportAreaMainBody" placeholder = "Describe the problem..."></textarea>
+            <textarea id = "reportAreaName" class = "reportAreaName" placeholder = "Your Name"></textarea>
+            <textarea id = "reportAreaEmail" class = "reportAreaEmail" placeholder = "Your Email"></textarea>
+            <div id = "reportAreaSubmitButton" class = "reportAreaSubmitButton">Send</div>
+            <div class = "headings" style = "top: 500px">Contact details</div>
+            <div class = "mainBody" style = "top: 560px">
+                <p>Email: zzhu061@aucklanduni.ac.nz</p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src='index.js'></script>
+</html>
